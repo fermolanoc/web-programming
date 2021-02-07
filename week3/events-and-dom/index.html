@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List DOM</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Items List</h1>
+    <div class="wrapper">
+      <!-- Item Form -->
+
+      <label for="input-text">Add any item you want</label>
+      <input type="text" name="input-text" id="input-text" required autofocus />
+
+      <button type="submit" class="add-item">Add Item</button>
+      <button type="submit" class="clear">Clear List</button>
+
+      <!-- List -->
+    </div>
+    <div class="wrapper">
+      <ul class="items-list"></ul>
+    </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      let item = document.querySelector("#input-text");
+      let itemsList = document.querySelector(".items-list");
+      let addItemButton = document.querySelector(".add-item");
+      let clearListButton = document.querySelector(".clear");
+
+      addItemButton.addEventListener("click", () => {
+        if (item.value.length == 0 || item.value.trim() == "") {
+          swal({
+            title: "Empty box!",
+            text: "You need to add something.",
+            icon: "warning",
+            button: "Try again!",
+          });
+          item.value = "";
+          item.focus();
+          return;
+        }
+        let createEl = document.createElement("li");
+        createEl.innerHTML = item.value;
+        itemsList.appendChild(createEl);
+        item.value = "";
+        item.focus();
+        swal({
+          title: "Sweet",
+          text: "Item added successfully",
+          icon: "success",
+          button: "Yay!!",
+        });
+      });
+    </script>
+  </body>
+</html>

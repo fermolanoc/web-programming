@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+h1 {
+  font-size: 2.4rem;
+  text-transform: uppercase;
+}
+p,
+label,
+input,
+li {
+  font-size: 1.4rem;
+}
+
+body {
+  background-color: rgb(92, 182, 189);
+  color: white;
+  text-align: center;
+  padding: 5rem 10rem;
+  display: grid;
+  place-items: center;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5rem;
+}
+.wrapper label,
+.wrapper input,
+.wrapper button {
+  margin-right: 1rem;
+  margin-top: 2rem;
+}
+
+input {
+  width: 400px;
+  padding: 0.5rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  caret-color: rgb(92, 182, 189);
+  color: rgb(78, 78, 78);
+  box-shadow: 3px 6px 9px 3px rgb(80, 145, 150);
+  background-color: rgb(233, 233, 233);
+}
+
+button {
+  width: 150px;
+  padding: 0.5rem 2rem;
+  outline: none;
+  border-radius: 10px;
+  box-shadow: 3px 6px 9px 3px rgb(80, 145, 150);
+  cursor: pointer;
+}
+button:hover,
+button::selection {
+  outline: none;
+  transform: scale(1.05);
+}
+.add-item {
+  border: solid 1px rgb(233, 233, 233);
+  color: rgb(80, 145, 150);
+  background-color: rgb(233, 233, 233);
+}
+.clear {
+  border: solid 1px rgb(95, 170, 175);
+  background-color: rgb(95, 170, 175);
+  color: white;
+}
+
+.items-list li {
+  list-style: square;
+}
