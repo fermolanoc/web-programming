@@ -32,7 +32,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
   margin-top: 5rem;
 }
@@ -79,6 +79,12 @@ button::selection {
   color: white;
 }
 
+.items-list {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  align-items: flex-start;
+}
 .items-list li {
   list-style: square;
 }

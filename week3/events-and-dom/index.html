@@ -30,6 +30,12 @@
       let addItemButton = document.querySelector(".add-item");
       let clearListButton = document.querySelector(".clear");
 
+      document.addEventListener("keyup", () => {
+        if (event.keyCode == 13) {
+          addItemButton.click();
+        }
+      });
+
       addItemButton.addEventListener("click", () => {
         if (item.value.length == 0 || item.value.trim() == "") {
           swal({
@@ -42,17 +48,39 @@
           item.focus();
           return;
         }
-        let createEl = document.createElement("li");
-        createEl.innerHTML = item.value;
-        itemsList.appendChild(createEl);
-        item.value = "";
-        item.focus();
+        if (itemsList.childNodes.length > 9) {
+          swal({
+            title: "List is full!",
+            text: "Cannot add more than 10 items.",
+            icon: "warning",
+            button: "Oookkk",
+          });
+        } else {
+          if (itemsList.childNodes.length == 9) {
+            swal({
+              title: "Sweet",
+              text: "10 items added successfully",
+              icon: "success",
+              button: "Yay!!",
+            });
+          }
+          let createEl = document.createElement("li");
+          createEl.innerHTML = item.value;
+          itemsList.appendChild(createEl);
+          item.value = "";
+          item.focus();
+        }
+      });
+
+      clearListButton.addEventListener("click", () => {
         swal({
-          title: "Sweet",
-          text: "Item added successfully",
-          icon: "success",
-          button: "Yay!!",
+          title: "Hope you knew what you were doing",
+          text: "List have been cleaned!",
+          icon: "error",
+          button: "Ok!",
         });
+        itemsList.innerHTML = "";
+        item.focus();
       });
     </script>
   </body>
