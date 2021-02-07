@@ -47,6 +47,16 @@
           item.value = "";
           item.focus();
           return;
+        } else if (item.value.length > 50) {
+          swal({
+            title: "Text is too long!",
+            text: "Are you writing a book or something?",
+            icon: "warning",
+            button: "Try again!",
+          });
+
+          item.focus();
+          return;
         }
         if (itemsList.childNodes.length > 9) {
           swal({
