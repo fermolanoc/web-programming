@@ -75,7 +75,12 @@
 
       addStudentButton.addEventListener("click", () => {
         //   check if name is null or only numbers
-        if (!name.value || Number.isInteger(parseInt(name.value)) === true) {
+        if (
+          !name.value ||
+          Number.isInteger(parseInt(name.value)) === true ||
+          name.value.length == 0 ||
+          name.value.trim() == ""
+        ) {
           swal({
             title: "No Data",
             text: "You need to enter your full name.",
