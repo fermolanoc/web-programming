@@ -20,7 +20,8 @@ h2 {
 }
 
 body {
-  padding: 1rem 2rem;
+  height: 100vh;
+  padding: 4rem 2rem;
   background-color: var(--main-color);
   color: var(--main-text-color);
   font-size: 1.4rem;
@@ -50,6 +51,11 @@ body {
 }
 #student-list li {
   cursor: pointer;
+  margin-bottom: 1rem;
+  list-style-type: none;
+}
+li::before {
+  content: "\2713 \00a0";
 }
 
 button {
@@ -74,6 +80,13 @@ button {
   text-decoration: line-through;
   font-style: italic;
   color: rgb(226, 226, 226);
+}
+.selected::before {
+  content: "\2715 \00a0";
+  font-style: normal;
+  color: rgb(173, 25, 25);
+  font-weight: bold;
+  font-size: 1.6rem;
 }
 
 input {
