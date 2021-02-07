@@ -54,6 +54,9 @@
       let id = document.querySelector("#student-id");
       let gpa = document.querySelector("#student-gpa");
       let addStudentButton = document.querySelector("#add-student");
+      let removeStudentButton = document.querySelector(
+        "#remove-selected-students"
+      );
       let studentCount = document.querySelector("#student-count");
       let studentList = document.querySelector("#student-list");
 
@@ -64,7 +67,7 @@
       });
 
       addStudentButton.addEventListener("click", () => {
-        //   check if name is null or constain numbers
+        //   check if name is null or only numbers
         if (!name.value || Number.isInteger(parseInt(name.value)) === true) {
           swal({
             title: "No Data",
@@ -73,6 +76,7 @@
             button: "Try again!",
           });
           return;
+          //   check wether id is empty or is not a number
         } else if (!id.value || Number.isInteger(parseInt(id.value)) == false) {
           swal({
             title: "Id needed",
@@ -81,6 +85,7 @@
             button: "Try again!",
           });
           return;
+          //   check wether gpa is empty, or not between 0 and 4.0
         } else if (!gpa.value || gpa.value < 0 || gpa.value > 4.0) {
           swal({
             title: "Wrong GPA format or range",
@@ -90,24 +95,26 @@
           });
           return;
         } else {
-          studentCount.textContent++;
-          let createEl = document.createElement("li");
+          studentCount.textContent++; //increment studentCount to print on student-list
+          let createEl = document.createElement("li"); //create a new list element
           createEl.innerHTML = `${name.value}, id: ${id.value}, GPA: ${gpa.value}`;
-          studentList.appendChild(createEl);
+          studentList.appendChild(createEl); //add element to list
+          //   empty all inputs
           name.value = "";
           id.value = "";
           gpa.value = "";
           name.focus();
-
-          let items = document.querySelectorAll("li");
-          items.forEach((item) => {
-            item.addEventListener("click", () => {
-              item.classList.toggle("selected");
-            });
+          //   toggle class "selected" on and off on items to change style
+          createEl.addEventListener("click", () => {
+            createEl.classList.toggle("selected");
           });
         }
       });
 
+      removeStudentButton.addEventListener("click", () => {
+        let items = document.querySelectorAll("li");
+        console.log(items);
+      });
       /* Add the following functionality to this page
 
       When the page loads
