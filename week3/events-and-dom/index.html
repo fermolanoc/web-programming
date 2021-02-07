@@ -25,11 +25,13 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+      // catch values
       let item = document.querySelector("#input-text");
       let itemsList = document.querySelector(".items-list");
       let addItemButton = document.querySelector(".add-item");
       let clearListButton = document.querySelector(".clear");
 
+      // use click method on button when using 'Enter' key
       document.addEventListener("keyup", () => {
         if (event.keyCode == 13) {
           addItemButton.click();
@@ -37,6 +39,7 @@
       });
 
       addItemButton.addEventListener("click", () => {
+        // validates if input is empty or is only spaces
         if (item.value.length == 0 || item.value.trim() == "") {
           swal({
             title: "Empty box!",
@@ -54,10 +57,10 @@
             icon: "warning",
             button: "Try again!",
           });
-
           item.focus();
           return;
         }
+        // check if there are 10 elements already
         if (itemsList.childNodes.length > 9) {
           swal({
             title: "List is full!",
@@ -66,6 +69,7 @@
             button: "Oookkk",
           });
         } else {
+          // if 10th element is added display a message
           if (itemsList.childNodes.length == 9) {
             swal({
               title: "Sweet",
@@ -74,14 +78,17 @@
               button: "Yay!!",
             });
           }
+          // creates new list element
           let createEl = document.createElement("li");
           createEl.innerHTML = item.value;
+          // add element to list
           itemsList.appendChild(createEl);
           item.value = "";
           item.focus();
         }
       });
 
+      // Delete the whole list
       clearListButton.addEventListener("click", () => {
         swal({
           title: "Hope you knew what you were doing",

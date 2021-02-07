@@ -20,7 +20,12 @@
       ><input id="student-id" name="student-id" />
       <br />
       <label for="student-gpa">Student GPA</label
-      ><input id="student-gpa" name="student-gpa" type="number" />
+      ><input
+        id="student-gpa"
+        name="student-gpa"
+        type="number"
+        placeholder="0.0 - 4.0"
+      />
       <br />
       <button id="add-student">Add Student</button>
     </div>
@@ -30,7 +35,9 @@
 
       <p>
         There are
-        <span id="student-count"> </span>
+        <span id="student-count"
+          ><!-- use JavaScript to count the number of students, and show here -->
+        </span>
         student(s) in the club.
       </p>
 
@@ -38,11 +45,11 @@
         <!-- use JavaScript to create li elements  -->
       </ul>
     </div>
-    <button id="button remove-selected-students">
-      Remove selected students
-    </button>
+    <button id="remove-selected-students">Remove selected students</button>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+      // catch values from elements on DOM
       let name = document.querySelector("#student-name");
       let id = document.querySelector("#student-id");
       let gpa = document.querySelector("#student-gpa");
@@ -50,20 +57,57 @@
       let studentCount = document.querySelector("#student-count");
       let studentList = document.querySelector("#student-list");
 
+      //   default 0 students on list when load page
       window.addEventListener("load", () => {
         studentCount.textContent = 0;
+        name.focus();
       });
 
       addStudentButton.addEventListener("click", () => {
-        studentCount.textContent++;
-        let createEl = document.createElement("li");
-        createEl.innerHTML = `${name.value}, id: ${id.value}, GPA: ${gpa.value}`;
-        studentList.appendChild(createEl);
-        name.value = "";
-        id.value = "";
-        gpa.value = "";
-        name.focus();
+        //   check if name is null or constain numbers
+        if (!name.value || Number.isInteger(parseInt(name.value)) === true) {
+          swal({
+            title: "No Data",
+            text: "You need to enter your full name.",
+            icon: "warning",
+            button: "Try again!",
+          });
+          return;
+        } else if (!id.value || Number.isInteger(parseInt(id.value)) == false) {
+          swal({
+            title: "Id needed",
+            text: "Please enter a valid Id",
+            icon: "warning",
+            button: "Try again!",
+          });
+          return;
+        } else if (!gpa.value || gpa.value < 0 || gpa.value > 4.0) {
+          swal({
+            title: "Wrong GPA format or range",
+            text: "GPA must be between 0.0 and 4.0",
+            icon: "warning",
+            button: "Try again!",
+          });
+          return;
+        } else {
+          studentCount.textContent++;
+          let createEl = document.createElement("li");
+          createEl.innerHTML = `${name.value}, id: ${id.value}, GPA: ${gpa.value}`;
+          studentList.appendChild(createEl);
+          name.value = "";
+          id.value = "";
+          gpa.value = "";
+          name.focus();
+
+          let items = document.querySelectorAll("li");
+          items.forEach((item) => {
+            item.addEventListener("click", () => {
+              item.classList.toggle("selected");
+            });
+          });
+        }
       });
+
       /* Add the following functionality to this page
 
       When the page loads

@@ -45,28 +45,42 @@ body {
   align-items: center;
   margin-bottom: 2rem;
 }
+#student-list {
+  margin-top: 2rem;
+}
+#student-list li {
+  cursor: pointer;
+}
 
 button {
-  /* width: auto; */
   padding: 0.5rem 2rem;
   outline: none;
   border: none;
   background-color: white;
   color: var(--main-color);
   border-radius: 10px;
+  cursor: pointer;
+}
+#remove-selected-students {
+  background-color: var(--main-text-color);
+  opacity: 0.85;
+  color: var(--main-color);
+}
+#remove-selected-students:hover {
+  opacity: 1;
 }
 
 .selected {
   text-decoration: line-through;
   font-style: italic;
-  color: gray;
+  color: rgb(226, 226, 226);
 }
 
 input {
   width: 100%;
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px 5px 10px 0px;
   box-sizing: border-box;
   border-radius: 10px;
