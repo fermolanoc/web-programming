@@ -236,11 +236,17 @@ let nobelWinners = nobelPrizeInfo.map(winner => winner)
 // filter winners by category "literature" and get the winners info
 let literatureWinners = nobelWinners.filter(category => category.category === "literature").map(winners => winners.laureates);
 console.log(literatureWinners);
-
 // get the literature winner's full name
 let literatureWinnersNames = literatureWinners[0].map(winner => console.log(`Literature Nobel Winner: ${winner.firstname} ${winner.surname}`));
 
-let nobelCategories = nobelPrizeInfo.map(category => category.category)
+
+// get physics category winners info
+let physicsWinners = nobelWinners.filter(category => category.category === "physics").map(winners => winners.laureates);
+let physicsWinnersId = physicsWinners[0].map(winner => console.log(winner.id))
+// console.log(physicsWinnersId);
+
+
+let nobelCategories = nobelPrizeInfo.map(category => console.log(category.category))
 // console.log(nobelCategories);
 
 // let literatureWinners = nobelPrizeInfo.filter(category => category.category == "literature").map(winners => winners.laureates)
