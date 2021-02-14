@@ -72,8 +72,17 @@ let cats_and_owners = [
 ]
 
 // TODO print Gary Oldman's cat's name
+console.log(cats_and_owners[1].cat);
+
 // TODO Taylor Swift's cat is called 'Meredith'. Write code to add this data to the array.
+let taylorSwiftCat = { name: "Taylor Swift", cat: "Meredith" };
+cats_and_owners.push(taylorSwiftCat);
+console.log(cats_and_owners);
+
 // TODO write a loop to print each cat owner, and their cat's name, one per line. Use the forEach style.
+cats_and_owners.forEach((owner) => {
+    console.log(`${owner.name}'s cat: ${owner.cat}`);
+})
 
 
 
