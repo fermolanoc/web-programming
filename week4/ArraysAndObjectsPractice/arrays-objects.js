@@ -55,7 +55,8 @@ console.log(EUR_to_AUD);
 
 // TODO write code to identify the currency symbol that has the highest exchange rate compared to Euros.
 //    In other words, identify the property with the largest value. the answer is BRL (Brazilian Real) at 3.8959 BRL to 1 Euro.
-console.log(rates.sort());
+// loop and compare key a vs key b values to see which is higher, at the end show the key with the highest value
+console.log(Object.keys(rates).reduce((a, b) => rates[a] > rates[b] ? a : b))
 
 
 
