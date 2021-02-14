@@ -99,6 +99,7 @@ Source http://api.nobelprize.org/v1/prize.json?year=2017
 //   have a good look at how the JSON is structured, and think about what loop(s) you'll need to write.
 
 
+
 let nobel_prize_winners_2017 = {
     "prizes": [
         {
@@ -223,3 +224,38 @@ let nobel_prize_winners_2017 = {
         }
     ]
 }
+
+// get all the date from object
+let nobelPrizeInfo = nobel_prize_winners_2017.prizes;
+// console.log(nobelPrizeInfo);
+
+// get all the winners
+let nobelWinners = nobelPrizeInfo.map(winner => winner)
+// console.log(nobelWinners);
+
+// filter winners by category "literature" and get the winners info
+let literatureWinners = nobelWinners.filter(category => category.category === "literature").map(winners => winners.laureates);
+console.log(literatureWinners);
+
+// get the literature winner's full name
+let literatureWinnersNames = literatureWinners[0].map(winner => console.log(`Literature Nobel Winner: ${winner.firstname} ${winner.surname}`));
+
+let nobelCategories = nobelPrizeInfo.map(category => category.category)
+// console.log(nobelCategories);
+
+// let literatureWinners = nobelPrizeInfo.filter(category => category.category == "literature").map(winners => winners.laureates)
+// // console.log(literatureWinners[0][1]);
+
+// let winnersNames = literatureWinners[0].map((winner) => {
+//     return `${winner.firstname} ${winner.surname}`
+
+// })
+// winnersNames.forEach(winner => {
+//     console.log(winner);
+// })
+
+// let winners = nobelPrizeInfo.map(winner => {
+//     // console.log(winner.laureates);
+//     return winner.laureates
+// })
+
