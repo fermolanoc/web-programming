@@ -18,7 +18,11 @@ let iss_location = {
 }
 
 // TODO Extract the latitude value, and log it to the console.
+let latitude = iss_location.iss_position.latitude;
+console.log(latitude);
 // TODO Extract the longitude value, and log it to the console.
+let longitude = iss_location.iss_position.longitude;
+console.log(longitude);
 
 
 
