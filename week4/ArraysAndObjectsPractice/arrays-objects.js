@@ -41,10 +41,21 @@ let rates = {
 }
 
 // TODO write code to add a new property for Swiss Francs. Symbol is CHF, value is 1.1787.
+// let swissFrancs = { ...rates, "CHF": 1.1787 };
+// console.log(swissFrancs);
+rates["CHF"] = 1.1787
+console.log(rates);
+
 // TODO if you had 100 Euros, write code to get the exchange rate from the object, then calculate 
 //      the equivalent value in Australian Dollars (AUD)
+rates["EUR"] = 1;
+// calculate how much are 100 euros in AUD
+let EUR_to_AUD = (rates["EUR"] * 100) * rates["AUD"];
+console.log(EUR_to_AUD);
+
 // TODO write code to identify the currency symbol that has the highest exchange rate compared to Euros.
 //    In other words, identify the property with the largest value. the answer is BRL (Brazilian Real) at 3.8959 BRL to 1 Euro.
+console.log(rates.sort());
 
 
 
