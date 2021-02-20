@@ -58,7 +58,9 @@ bridges = [
 ]
 
 bridges.forEach(bridge => {
-    let markerText = `<b>${bridge.name}</b></br>`;
+    let markerText = `<b>${bridge.name}</b></br><b>Length:</b> 
+        ${bridge.span} (meters)</br><small>
+        ${bridge.location.city}, ${bridge.location.state}</small>`;
     L.marker(bridge.location.coordinates)
         .bindPopup(markerText)
         .addTo(map);
