@@ -1,5 +1,5 @@
-let areaCenterCoordinates = [36.2118475, -113.7143307]; // coordinates of USA map
-let zoomLevel = 3; //1= whole world, max is 20(city blocks)
+let areaCenterCoordinates = [42.2118475, -100.7143307]; // coordinates of USA map
+let zoomLevel = 3.4; //1= whole world, max is 20(city blocks)
 
 let map = L.map("usBridges-map").setView(areaCenterCoordinates, zoomLevel);
 
