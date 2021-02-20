@@ -24,7 +24,8 @@
       }
 
       header,
-      .container {
+      .container,
+      .buttons {
         margin: 25px auto;
         display: flex;
         justify-content: space-evenly;
@@ -48,6 +49,27 @@
         border: 1px whitesmoke solid;
         border-radius: 25px;
       }
+
+      .buttons button {
+        margin-right: 10px;
+        padding: 5px 15px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        color: whitesmoke;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button:hover {
+        transform: scale(1.1);
+        transition: 400ms;
+      }
+      #save-draw-btn {
+        background-color: tomato;
+      }
+      #clear-draw-btn {
+        background-color: salmon;
+      }
     </style>
   </head>
   <body>
@@ -63,9 +85,17 @@
     </div>
     <canvas id="canvas" height="400" width="400"></canvas>
 
+    <div class="buttons">
+      <button type="submit" id="save-draw-btn" download>Save Draw</button>
+      <a href="" download="draw.png">Download Draw</a>
+      <button type="submit" id="clear-draw-btn">Clear Draw</button>
+    </div>
+
     <script>
       let canvas = document.querySelector("#canvas");
       let context = canvas.getContext("2d");
+      let color = document.querySelector("#color-picker");
+      let lineSize = document.querySelector("#lineSize-picker");
 
       // Keep track of whether the mouse button has been pressed down or not.
       // Think of this as whether the user is drawing or not, is their brush on the canvas?
@@ -98,7 +128,8 @@
         //Draw a filled circle centered under the mouse click
         //x, y is the top left corner, so shift up and left by 5 to center it under the mouse.
         context.beginPath();
-        context.arc(x - 5, y - 5, 25, 0, 6.3);
+        context.strokeStyle = color.value;
+        context.arc(x - 5, y - 5, lineSize.value, 0, 6.3);
         context.stroke();
       });
     </script>
