@@ -18,6 +18,42 @@ bridges = [
             coordinates: [40.6066, -74.0447]
         },
         span: 1298.4
+    },
+    {
+        name: "Golden Gate Bridge",
+        location: {
+            city: "San Francisco and Marin",
+            state: "CA",
+            coordinates: [37.8199, -122.4783]
+        },
+        span: 1280.2
+    },
+    {
+        name: "Mackinac Bridge",
+        location: {
+            city: "Mackinaw and St Ignace",
+            state: "MI",
+            coordinates: [45.8174, -84.7278]
+        },
+        span: 1158.0
+    },
+    {
+        name: "George Washington Bridge",
+        location: {
+            city: "New York",
+            state: "NY & New Jersey",
+            coordinates: [40.8517, -73.9527]
+        },
+        span: 1067.0
+    },
+    {
+        name: "Tacoma Narrows Bridge",
+        location: {
+            city: "Tacoma and Kitsap",
+            state: "WA",
+            coordinates: [47.2690, -122.5517]
+        },
+        span: 853.44
     }
 ]
 
@@ -28,8 +64,3 @@ bridges.forEach(bridge => {
         .addTo(map);
 });
 
-
-// Golden Gate Bridge	San Francisco and Marin, CA	1280.2	37.8199, -122.4783
-// Mackinac Bridge	Mackinaw and St Ignace, MI	1158.0	45.8174, -84.7278
-// George Washington Bridge	New York, NY and New Jersey, NJ	1067.0	40.8517, -73.9527
-// Tacoma Narrows Bridge	Tacoma and Kitsap, WA	853.44	47.2690, -122.5517
