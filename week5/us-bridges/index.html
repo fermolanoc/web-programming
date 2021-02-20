@@ -14,9 +14,24 @@
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
     <link rel="stylesheet" type="text/css" href="mapstyle.css" />
     <script async defer src="map.js"></script>
+
+    <!-- Chart script -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+      integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script async defer src="chart.js"></script> -->
   </head>
   <body>
-    <h1>Longest US Bridges Map</h1>
-    <div id="usBridges-map"></div>
+    <header>
+      <h1>Longest US Bridges Map</h1>
+    </header>
+    <div class="wrapper">
+      <div id="usBridges-map"></div>
+      <div class="bridges-chart">
+        <canvas id="bridges-chart"></canvas>
+      </div>
+    </div>
   </body>
 </html>

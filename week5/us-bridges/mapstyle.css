@@ -5,16 +5,40 @@
 }
 
 body {
-  background-color: #2d8ca7;
-  color: whitesmoke;
-  padding: 50px 0;
-  display: grid;
-  place-items: center;
+  background-color: whitesmoke;
+  color: #2d8ca7;
+  padding: 20px 0 0 0;
+}
+header {
+  width: 100%;
+  text-align: center;
 }
 
-#usBridges-map {
-  background-color: rgb(255, 255, 255);
+.wrapper {
   width: 100%;
-  height: 100vh;
-  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 20px;
+}
+
+.wrapper div {
+  flex: 1 0 450px;
+  margin-bottom: 20px;
+}
+#usBridges-map {
+  background-color: whitesmoke;
+  width: 70%;
+  height: 400px;
+}
+
+.bridges-chart {
+  background-color: whitesmoke;
+  color: #141414;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }

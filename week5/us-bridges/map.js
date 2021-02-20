@@ -5,11 +5,11 @@ let map = L.map("usBridges-map").setView(areaCenterCoordinates, zoomLevel);
 
 // Tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom: 3
 }).addTo(map);
 
 // Bridges data
-bridges = [
+let bridges = [
     {
         name: "Verrazano-Narrows Bridge",
         location: {
@@ -57,11 +57,14 @@ bridges = [
     }
 ]
 
+// Personalized icon for markers
 let myIcon = L.icon({
     iconUrl: 'https://www.flaticon.com/svg/vstatic/svg/183/183375.svg?token=exp=1613792963~hmac=74febbfdaaaca7ccbbe8432c4279e89c',
     iconSize: [38, 95],
 });
 
+
+// Loop for every bridge info to implement marker data and pass data to bar chart
 bridges.forEach(bridge => {
     let markerText = `<b>${bridge.name}</b></br><b>Length:</b> 
         ${bridge.span} (meters)</br><small>
@@ -69,6 +72,39 @@ bridges.forEach(bridge => {
     L.marker(bridge.location.coordinates, { icon: myIcon })
         .bindPopup(markerText)
         .addTo(map);
-
 });
 
+
+
+// Chart object
+let canvas = document.querySelector("#bridges-chart");
+let context = canvas.getContext("2d");
+
+let chart = new Chart(context, {
+    type: "bar",
+    data: {
+        labels: [],
+        datasets: [{
+            label: "Span (meters)",
+            data: [],
+            backgroundColor: ["orange", "dodgerblue", "mediumseagreen", "slateblue", "violet"]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: true
+    }
+})
+
+
+bridges.forEach(bridge => {
+    chart.data.labels.push(bridge.name)
+    chart.data.datasets[0].data.push(bridge.span)
+    chart.update();
+});
