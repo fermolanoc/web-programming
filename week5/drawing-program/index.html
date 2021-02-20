@@ -86,11 +86,13 @@
     <canvas id="canvas" height="400" width="400"></canvas>
 
     <div class="buttons">
-      <button type="submit" id="save-draw-btn" onClick="download()">
+      <a id="download-draw"></a>
+      <button type="submit" id="save-draw-btn" onclick="download()">
         Save Draw
       </button>
-      <a id="download-draw"></a>
-      <button type="submit" id="clear-draw-btn">Clear Draw</button>
+      <button type="submit" id="clear-draw-btn" onclick="clearCanvas()">
+        Clear Draw
+      </button>
     </div>
 
     <script>
@@ -99,6 +101,7 @@
       let color = document.querySelector("#color-picker");
       let lineSize = document.querySelector("#lineSize-picker");
 
+      // function to download the drawing on canvas as an .png image on computer
       function download() {
         var download = document.querySelector("#download-draw");
         var img = canvas.toDataURL("image/png");
@@ -107,6 +110,13 @@
         // console.log(download);
         // console.log(img);
         download.click();
+      }
+
+      // Clear canvas function
+      function clearCanvas() {
+        let canvas = document.querySelector("#canvas");
+        let context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
       }
 
       // Keep track of whether the mouse button has been pressed down or not.
