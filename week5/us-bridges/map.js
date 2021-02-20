@@ -57,12 +57,18 @@ bridges = [
     }
 ]
 
+let myIcon = L.icon({
+    iconUrl: 'https://www.flaticon.com/svg/vstatic/svg/183/183375.svg?token=exp=1613792963~hmac=74febbfdaaaca7ccbbe8432c4279e89c',
+    iconSize: [38, 95],
+});
+
 bridges.forEach(bridge => {
     let markerText = `<b>${bridge.name}</b></br><b>Length:</b> 
         ${bridge.span} (meters)</br><small>
         ${bridge.location.city}, ${bridge.location.state}</small>`;
-    L.marker(bridge.location.coordinates)
+    L.marker(bridge.location.coordinates, { icon: myIcon })
         .bindPopup(markerText)
         .addTo(map);
+
 });
 
