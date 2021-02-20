@@ -86,8 +86,10 @@
     <canvas id="canvas" height="400" width="400"></canvas>
 
     <div class="buttons">
-      <button type="submit" id="save-draw-btn" download>Save Draw</button>
-      <a href="" download="draw.png">Download Draw</a>
+      <button type="submit" id="save-draw-btn" onClick="download()">
+        Save Draw
+      </button>
+      <a id="download-draw"></a>
       <button type="submit" id="clear-draw-btn">Clear Draw</button>
     </div>
 
@@ -96,6 +98,16 @@
       let context = canvas.getContext("2d");
       let color = document.querySelector("#color-picker");
       let lineSize = document.querySelector("#lineSize-picker");
+
+      function download() {
+        var download = document.querySelector("#download-draw");
+        var img = canvas.toDataURL("image/png");
+        download.setAttribute("href", img);
+        download.setAttribute("download", "my-awesome-drawing.png");
+        // console.log(download);
+        // console.log(img);
+        download.click();
+      }
 
       // Keep track of whether the mouse button has been pressed down or not.
       // Think of this as whether the user is drawing or not, is their brush on the canvas?
