@@ -59,7 +59,7 @@ let bridges = [
 
 // Personalized icon for markers
 let myIcon = L.icon({
-    iconUrl: 'https://www.flaticon.com/svg/vstatic/svg/183/183375.svg?token=exp=1613792963~hmac=74febbfdaaaca7ccbbe8432c4279e89c',
+    iconUrl: './icons/bridge.svg',
     iconSize: [38, 95],
 });
 
