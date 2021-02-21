@@ -109,6 +109,7 @@
     </div>
 
     <script>
+      // Get elements from DOM and create canvas element
       let canvas = document.querySelector("#canvas");
       let context = canvas.getContext("2d");
       let color = document.querySelector("#color-picker");
@@ -120,8 +121,6 @@
         var img = canvas.toDataURL("image/png");
         download.setAttribute("href", img);
         download.setAttribute("download", "my-awesome-drawing.png");
-        // console.log(download);
-        // console.log(img);
         download.click();
       }
 
@@ -163,8 +162,8 @@
         //Draw a filled circle centered under the mouse click
         //x, y is the top left corner, so shift up and left by 5 to center it under the mouse.
         context.beginPath();
-        context.strokeStyle = color.value;
-        context.arc(x - 5, y - 5, lineSize.value, 0, 6.3);
+        context.strokeStyle = color.value; // add the color chosen by the user as the line color
+        context.arc(x - 5, y - 5, lineSize.value, 0, 6.3); // line size will vary depending on what the user choose
         context.stroke();
       });
     </script>
