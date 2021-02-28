@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Where is the ISS?</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <script async defer src="fetch.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Where is the International Space Station?</h1>
+
+      <div>
+        <p><b> This page will update every 10 seconds</b></p>
+        <p>
+          At <span id="timeUpdated"></span> the ISS is over the following
+          coordinates:
+        </p>
+        <div class="coordinates">
+          <p>ISS Latitude: <span id="iss-lat"></span></p>
+          <p>ISS Longitude: <span id="iss-long"></span></p>
+        </div>
+      </div>
+      <div id="iss-map"></div>
+    </div>
+  </body>
+</html>
