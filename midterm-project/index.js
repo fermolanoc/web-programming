@@ -4,31 +4,26 @@ let user = document.querySelector("#user");
 let cardList = document.querySelector("#card-container");
 let noReposMsg = document.querySelector("#no-reposMsg");
 
-// function removeCards() {
-//   const cards = document.querySelectorAll("card");
-//   console.log(cards);
-//   if (cards) {
-//     cardList.remove(cards);
-//   }
-// }
-
 // function getRepoLanguages(repo) {
 //   fetch(repo.languages_url)
 //     .then((res) => {
 //       return res.json();
 //     })
 //     .then((repoData) => {
-//       for (const key in repoData) {
-//         if (Object.hasOwnProperty.call(repoData, key)) {
-//           const element = repoData[key];
-//         }
-//       }
+//       console.log(Object.keys(repoData));
+//       let languages = Object.keys(repoData);
+//       return languages;
+//       languages.forEach((language) => {
+//         console.log(language);
+//       });
 //     });
 // }
 
-async function showRepos(data) {
+function showRepos(data) {
+  cardList.innerHTML = ""; // clear container if there's data
   data.map((repo) => {
-    let card = document.createElement("div");
+    // loop trough each repository to create a card
+    let card = document.createElement("div"); // create card element and add classes
     card.className = "col-12 col-md-6 col-lg-4 mb-4";
 
     let cardContainer = document.createElement("div");
@@ -59,24 +54,25 @@ async function showRepos(data) {
   });
 }
 
+// generate customized url based on github username and get user repositories
 async function getRepos(username) {
-  // removeCards();
   const baseUrl = await `https://api.github.com/users/${username}/repos`;
 
   try {
-    fetch(baseUrl)
+    fetch(baseUrl) // if the url exists
       .then((res) => {
-        return res.json();
+        return res.json(); // get data in json format
       })
       .then((data) => {
         console.log(data);
 
         if (data.message) {
+          // if data contains a key called message it means user doesn't exists
           user.innerHTML = `User @${username} not found!`;
         } else {
           user.innerHTML = `Welcome @${username}`;
 
-          showRepos(data);
+          showRepos(data); // if user exists, show user's repositories
         }
       });
   } catch (error) {
@@ -84,7 +80,8 @@ async function getRepos(username) {
   }
 }
 
+// function to handle the search user data
 searchButton.addEventListener("click", (event) => {
-  getRepos(username.value);
-  event.preventDefault();
+  getRepos(username.value); // when clicked, call the function to get the user's repositories data
+  event.preventDefault(); // prevent to reload website
 });
