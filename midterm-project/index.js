@@ -4,20 +4,26 @@ let user = document.querySelector("#user");
 let cardList = document.querySelector("#card-container");
 let noReposMsg = document.querySelector("#no-reposMsg");
 
-// function getRepoLanguages(repo) {
-//   fetch(repo.languages_url)
-//     .then((res) => {
-//       return res.json();
-//     })
-//     .then((repoData) => {
-//       console.log(Object.keys(repoData));
-//       let languages = Object.keys(repoData);
-//       return languages;
-//       languages.forEach((language) => {
-//         console.log(language);
-//       });
-//     });
-// }
+async function getRepoLanguages(repo) {
+  await fetch(repo.languages_url)
+    .then((res) => {
+      return res.json();
+    })
+    .then((repoData) => {
+      // console.log(Object.keys(repoData));
+      let languages = Object.keys(repoData);
+      // return languages;
+      languages.forEach((language) => {
+        console.log(language);
+        return language;
+        // let cardBodyDetails = document.createElement("p");
+        // cardBodyDetails.className = "card-text fw-light";
+        // cardBodyDetails.innerHTML = language;
+
+        // return cardBodyDetails;
+      });
+    });
+}
 
 function showRepos(data) {
   cardList.innerHTML = ""; // clear container if there's data
@@ -41,12 +47,14 @@ function showRepos(data) {
 
     let cardBodyDetails = document.createElement("p");
     cardBodyDetails.className = "card-text fw-light";
-    // cardBodyDetails.innerHTML = getRepoLanguages(repo);
-    cardBodyDetails.innerHTML = "Project description";
+    // cardBodyDetails.innerHTML = `${languages}`;
+    cardBodyDetails.innerHTML = repo.description;
     cardBody.appendChild(cardBodyDetails);
 
-    let projectLink = document.createElement("button");
+    let projectLink = document.createElement("a");
     projectLink.className = "btn btn-danger";
+    projectLink.setAttribute("href", `${repo.html_url}`);
+    projectLink.setAttribute("target", "_blank");
     projectLink.innerHTML = "View Code";
     cardBody.appendChild(projectLink);
 
