@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Intro to Vue JS</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Hello Vue!</h1>
+      <p>{{ message }}</p>
+      <p>{{ messageWithExclamationPoints }}</p>
+      <!-- <p>This class is {{ thisClass }}</p> -->
+      <button v-on:click="addExclamation">Add '!'</button>
+      <button v-on:click="clearButton">Clear</button>
+    </div>
+    <script>
+      let app = Vue.createApp({
+        // model
+        data() {
+          return {
+            message: "Hi",
+            maxExclamationPoints: 10,
+            exclamationPoints: 0,
+            // thisClass: "Web Programming",
+          };
+        },
+        methods: {
+          addExclamation() {
+            if (this.exclamationPoints < this.maxExclamationPoints) {
+              this.exclamationPoints++;
+              //   this.message = this.message + "!";
+            } else {
+              alert("Cannot add more '!'");
+            }
+          },
+          clearButton() {
+            this.exclamationPoints = 0;
+          },
+        },
+        computed: {
+          messageWithExclamationPoints() {
+            let messageWithPoints = this.message;
+            for (let x = 0; x < this.exclamationPoints; x++) {
+              messageWithPoints = messageWithPoints + "!";
+            }
+            return messageWithPoints;
+          },
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

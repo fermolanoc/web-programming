@@ -1,0 +1,17 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2578
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\b\fs32 \cf0 \expnd0\expndtw0\kerning0
+Property ... was accessed during render but is not defined on instance.\
+
+\f1\b0 \
+This warning message means that there\'92s a property (kind of like a variable) that has been declared inside our HTML template, inside the \'91div\'92 with id=\'93app\'94 that is not being used/read/updated anywhere inside the app (inside the script).\
+\
+If we ignore it, the app will keep working but of course this means we\'92re declaring something that is not being used, so either our app is missing something or we created code that doesn\'92t do anything.\
+\
+One way to fix could be with v-if directive -> modifying the HTML template to render it (the total property) in case there\'92s any data read or updated that is using the property, otherwise do not show anything or show another message using a v-else directive.}
