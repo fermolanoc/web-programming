@@ -141,41 +141,7 @@ function showRepos(data) {
     //       // console.log(total);
     //       // console.log(languagesInRepo);
 
-    //       // let languages = Object.keys(repoLanguages);
-    //       // create modalButton to trigger modal element with statistics data
-    //       let modalButton = document.createElement("button");
-    //       modalButton.setAttribute("type", "button");
-    //       modalButton.setAttribute("data-bs-toggle", "modal");
-    //       modalButton.setAttribute("data-bs-target", `${repo.name}Modal`);
-    //       modalButton.className = "btn btn-warning";
-    //       modalButton.textContent = "View Statistics";
-
-    //       // create modal with statistics data
-    //       let modal = document.createElement("div");
-    //       modal.className = "modal fade";
-    //       modal.setAttribute("id", `${repo.name}Modal`);
-    //       modal.setAttribute("tabIndex", "-1");
-    //       modal.setAttribute("aria-labelledby", `${repo.name}ModalLabel`);
-    //       modal.setAttribute("aria-hidden", "true");
-
-    //       let modalDialog = document.createElement("div");
-    //       modalDialog.className = "modal-dialog";
-
-    //       let modalContent = document.createElement("div");
-    //       modalContent.className = "modal-content";
-    //       modalDialog.appendChild(modalContent);
-
-    //       let modalHeader = document.createElement("div");
-    //       modalHeader.className = "modal-header";
-    //       modalContent.appendChild(modalHeader);
-
-    //       let modalTitle = document.createElement("h5");
-    //       modalTitle.className = "modal-title";
-    //       modalTitle.setAttribute("id", `${repo.name}ModalLabel`);
-    //       modalTitle.innerHTML = `${repo.name}`;
-    //       modalHeader.appendChild(modalTitle);
-
-    //       modal.appendChild(modalDialog);
+    //
     //       // swal({
     //       //   title: `Statistics | ${repo.name}`,
     //       //   text: `Languages: ${languagesInRepo.join(", ")}\n Forks: ${
@@ -195,7 +161,7 @@ function showRepos(data) {
     let modalButton = document.createElement("button");
     modalButton.setAttribute("type", "button");
     modalButton.setAttribute("data-bs-toggle", "modal");
-    modalButton.setAttribute("data-bs-target", `${repo.name}Modal`);
+    modalButton.setAttribute("data-bs-target", `#${repo.name}Modal`);
     modalButton.className = "btn btn-warning";
     modalButton.textContent = "View Statistics";
 
@@ -244,10 +210,12 @@ async function getRepos(username) {
       .then((data) => {
         console.log(data);
         if (data.message) {
+          cardList.innerHTML = "";
           // if data contains a key called message it means user doesn't exists
-          user.innerHTML = `User @${username} not found!`;
+          user.innerHTML = `User @${username} was not found!`;
         } else {
-          user.innerHTML = `Welcome @${username}`;
+          user.innerHTML = `<bold>Welcome @${username}</bold></br> You currently have ${data.length} projects on GitHub`;
+
           showRepos(data); // if user exists, show user's repositories
         }
       });
