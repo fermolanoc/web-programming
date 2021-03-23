@@ -14,6 +14,8 @@
     />
     <link rel="stylesheet" href="./css/main.css" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+
     <script
       defer
       src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
@@ -71,7 +73,8 @@
       </div>
       <div class="container">
         <div class="row text-center mt-4">
-          <h4 id="user" class="username mb-4"></h4>
+          <h3 id="user" class="username fw-bold"></h3>
+          <h5 id="reposQty" class="mb-4"></h5>
         </div>
         <div id="no-reposMsg" class="no-repos"></div>
         <div id="card-container" class="row card-list">
@@ -100,7 +103,6 @@
             </div>
           </div>
         </div>
-      </div>
       </div>
     </main>
 

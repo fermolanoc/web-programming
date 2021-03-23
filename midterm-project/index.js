@@ -21,9 +21,9 @@ checkbox.addEventListener("change", function (event) {
 let username = document.querySelector("#username-input");
 let searchButton = document.querySelector("#search-button");
 let user = document.querySelector("#user");
+let reposQty = document.querySelector("#reposQty");
 let cardList = document.querySelector("#card-container");
 let noReposMsg = document.querySelector("#no-reposMsg");
-let modalContainer = document.querySelector(".modal");
 
 async function getRepoLanguages(repo) {
   await fetch(repo.languages_url)
@@ -108,7 +108,7 @@ function showRepos(data) {
     cardBody.appendChild(projectLink);
 
     // let projectStats = document.createElement("a");
-    // projectStats.className = "btn btn-danger";
+    // projectStats.className = "btn btn-warning";
     // projectStats.addEventListener("click", () => {
     //   // get url for languages used in each repository and fetch data
     //   const languages_url = `${repo.languages_url}`;
@@ -138,43 +138,32 @@ function showRepos(data) {
     //           languagesInRepo.push(`${language}: ${languagePercentage}%`);
     //         }
     //       }
-    //       // console.log(total);
-    //       // console.log(languagesInRepo);
+
+    //       console.log(total);
+    //       console.log(languagesInRepo);
 
     //
-    //       // swal({
-    //       //   title: `Statistics | ${repo.name}`,
-    //       //   text: `Languages: ${languagesInRepo.join(", ")}\n Forks: ${
-    //       //     repo.forks
-    //       //   }\n `,
-    //       //   icon: "success",
-    //       //   button: "Close",
-    //       // });
-    //       // languages.forEach((language) => {
-    //       //   return language;
-    //       //   // console.log(language);
-    //       // });
-    //     });
     // });
 
     // create modalButton to trigger modal element with statistics data
     let modalButton = document.createElement("button");
     modalButton.setAttribute("type", "button");
     modalButton.setAttribute("data-bs-toggle", "modal");
-    modalButton.setAttribute("data-bs-target", `#${repo.name}Modal`);
+    modalButton.setAttribute("data-bs-target", `#get${repo.name}Modal`);
     modalButton.className = "btn btn-warning";
-    modalButton.textContent = "View Statistics";
+    modalButton.innerHTML = "View Statistics";
 
     // create modal with statistics data
     let modal = document.createElement("div");
     modal.className = "modal fade";
-    modal.setAttribute("id", `${repo.name}Modal`);
+    modal.setAttribute("id", `get${repo.name}Modal`);
     modal.setAttribute("tabIndex", "-1");
-    modal.setAttribute("aria-labelledby", `${repo.name}ModalLabel`);
+    modal.setAttribute("aria-labelledby", `get${repo.name}ModalLabel`);
     modal.setAttribute("aria-hidden", "true");
 
     let modalDialog = document.createElement("div");
     modalDialog.className = "modal-dialog";
+    modal.appendChild(modalDialog);
 
     let modalContent = document.createElement("div");
     modalContent.className = "modal-content";
@@ -185,15 +174,61 @@ function showRepos(data) {
     modalContent.appendChild(modalHeader);
 
     let modalTitle = document.createElement("h5");
-    modalTitle.className = "modal-title";
-    modalTitle.setAttribute("id", `${repo.name}ModalLabel`);
-    modalTitle.innerHTML = `${repo.name}`;
+    modalTitle.className = "modal-title text-danger";
+    modalTitle.setAttribute("id", `get${repo.name}ModalLabel`);
+    modalTitle.innerHTML = `${repo.name} stats`;
     modalHeader.appendChild(modalTitle);
 
-    // projectStats.innerHTML = "View Statistics";
-    // cardBody.appendChild(projectStats);
-    cardBody.appendChild(modalButton);
+    let closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("data-bs-dismiss", "modal");
+    closeButton.setAttribute("aria-label", "Close");
+    closeButton.className = "btn-close";
+    modalHeader.appendChild(closeButton);
 
+    let modalBody = document.createElement("div");
+    modalBody.className = "modal-body";
+    modalContent.appendChild(modalBody);
+
+    modalButton.addEventListener("click", () => {
+      // get url for languages used in each repository and fetch data
+      const languages_url = `${repo.languages_url}`;
+      fetch(languages_url)
+        .then((res) => {
+          return res.json();
+        })
+        .then((repoLanguages) => {
+          // console.log(repoLanguages);
+
+          let total = 0; // start variable to sum total of values for all languages used
+          let languagesInRepo = []; // empty array to store each language and its percentage
+
+          for (const prop in repoLanguages) {
+            // console.log(`${prop}: ${repoLanguages[prop]}`);
+            total += repoLanguages[prop];
+          }
+
+          // iterate every language to calculate percentage and add each language % to array languagesInRepo
+          for (const language in repoLanguages) {
+            if (Object.hasOwnProperty.call(repoLanguages, language)) {
+              languagePercentage = (
+                (repoLanguages[language] * 100) /
+                total
+              ).toFixed(2);
+
+              languagesInRepo.push(`${language}: ${languagePercentage}%`);
+            }
+          }
+
+          modalBody.innerHTML = `${languagesInRepo.join(", ")}`; // add each language with % to content, separated by coma and space
+
+          console.log(total);
+          console.log(languagesInRepo);
+        });
+    });
+
+    cardBody.appendChild(modalButton); // add to each card button that triggers modal
+    cardList.appendChild(modal); // add modal to webpage - hidden by default
     cardList.appendChild(card);
   });
 }
@@ -214,7 +249,8 @@ async function getRepos(username) {
           // if data contains a key called message it means user doesn't exists
           user.innerHTML = `User @${username} was not found!`;
         } else {
-          user.innerHTML = `<bold>Welcome @${username}</bold></br> You currently have ${data.length} projects on GitHub`;
+          user.innerHTML = `Welcome @${username}`;
+          reposQty.innerHTML = `You currently have ${data.length} projects on GitHub`;
 
           showRepos(data); // if user exists, show user's repositories
         }

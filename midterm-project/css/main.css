@@ -1,89 +1,76 @@
 /* globals  */
 body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    color: var(--baseColor);
-    background: var(--baseBackground);
-  }
-  
-  :root {
-    --lime-green: hsl(163, 72%, 41%);
-    --bright-red: hsl(356, 69%, 56%);
-    --facebook: #168ef4;
-    --twitter: hsl(203, 89%, 53%);
-    --instagram-1: hsl(37, 97%, 70%);
-    --instagram-2: hsl(329, 70%, 58%);
-    --youTube: hsl(348, 97%, 39%);
-    --gray: #5f616d;
-    --cardGray: #f0f3fa;
-    --lightGray: #f8f9fe;
-    --cardTitle: #6f717e;
-    --baseBackground: white;
-    --baseColor: #1d2029;
-    --switchSpinner: white;
-    --switch: #5f616d;
-  }
-
-  .dark-mode {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 1em;
-  }
-  .checkbox {
-    display: none;
-  }
-  .checkbox:checked ~ .switch:before{
-    transform: translateX(40px);
-  }
-  .switch {
-    /* border: 1px solid red; */
-    height: 40px;
-    display: block;
-    border-radius: 20px;
-    background: var(--switch);
-    width: 80px;
-    padding: 5px;
-    box-sizing: border-box;
-    cursor: pointer;
-    user-select: none;
-  }
-  .switch::before {
-    content: "";
-    display: block;
-    width: 30px;
-    height: 30px;
-    background: var(--switchSpinner);
-    border-radius: 50%;
-    transform: translateX(0);
-    transition: .3s;
-    will-change: transform;
-  }
-
-
-  /* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: var(--baseColor);
+  background: var(--baseBackground);
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+:root {
+  --lime-green: hsl(163, 72%, 41%);
+  --bright-red: hsl(356, 69%, 56%);
+  --facebook: #168ef4;
+  --twitter: hsl(203, 89%, 53%);
+  --instagram-1: hsl(37, 97%, 70%);
+  --instagram-2: hsl(329, 70%, 58%);
+  --youTube: hsl(348, 97%, 39%);
+  --gray: #5f616d;
+  --cardGray: #f0f3fa;
+  --lightGray: #f8f9fe;
+  --cardTitle: #6f717e;
+  --baseBackground: white;
+  --baseColor: #1d2029;
+  --switchSpinner: white;
+  --switch: #5f616d;
 }
 
-/* The Close Button */
+.dark-mode {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1em;
+}
+.checkbox {
+  display: none;
+}
+.checkbox:checked ~ .switch:before {
+  transform: translateX(40px);
+}
+.switch {
+  /* border: 1px solid red; */
+  height: 40px;
+  display: block;
+  border-radius: 20px;
+  background: var(--switch);
+  width: 80px;
+  padding: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+}
+.switch::before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: var(--switchSpinner);
+  border-radius: 50%;
+  transform: translateX(0);
+  transition: 0.3s;
+  will-change: transform;
+}
+
+/* Modal */
+.modal-header {
+  background-color: var(--baseColor);
+}
+.modal-body {
+  background-color: var(--baseBackground);
+  color: var(--baseColor);
+}
+.modal-title {
+  font-weight: bold;
+}
+/* The Modal Close Button */
 .close {
   color: #aaa;
   float: right;
@@ -98,80 +85,102 @@ body {
   cursor: pointer;
 }
 
-
-  .card {
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--cardGray);
-    text-align: center;
-    padding: 4px 2px;
-    position: relative;
-  }
-  .card::before {
-    content: "";
-    height: 4px;
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    background-image: linear-gradient(
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cardGray);
+  text-align: center;
+  padding: 4px 2px;
+  position: relative;
+}
+.card::before {
+  content: "";
+  height: 4px;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-image: linear-gradient(
     to right,
     var(--instagram-1) 0%,
     var(--instagram-2) 100%
   );
-  }
-  
-  .card-title {
-    color: var(--baseColor);
-  }
-  .card-text {
-    color: var(--switch);
-  }
-  
-  .wrapper {
-    padding: 0 30px;
-  }
+}
+
+.card-title {
+  color: var(--baseColor);
+}
+.card-text {
+  color: var(--switch);
+}
+
+.wrapper {
+  padding: 0 30px;
+}
+.grid {
+  display: grid;
+  grid-row-gap: 25px;
+}
+h2 {
+  color: var(--gray);
+}
+
+@media screen and (min-width: 480px) {
   .grid {
+    /* border: 1px solid purple; */
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 25px;
+  }
+  .wrapper {
+    max-width: 1440px;
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .header-total {
+    border: none;
+  }
+  .header-grid {
     display: grid;
-    grid-row-gap: 25px;
+    grid-template-columns: 1fr 200px;
   }
-  h2 {
-    color: var(--gray);
-  }
-  
-  @media screen and (min-width: 480px) {
-    .grid {
-      /* border: 1px solid purple; */
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 25px;
-    }
-    .wrapper {
-      max-width: 1440px;
-      margin: auto;
-    }
-  }
-  
-  @media screen and (min-width: 768px) {
-    .grid {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-  
-  @media screen and (min-width: 1024px) {
-    .grid {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-    .header-total {
-      border: none;
-    }
-    .header-grid {
-      display: grid;
-      grid-template-columns: 1fr 200px;
-    }
-  }
-  
-  .is-dark-mode {
+}
+
+.is-dark-mode {
+  --cardGray: #252b43;
+  --baseBackground: #1d2029;
+  --baseColor: white;
+  --gray: #8088ad;
+  --lightGray: #1d2029;
+  --cardTitle: #8088ad;
+  --switchSpinner: #282943;
+  --switch: linear-gradient(to right, #4796d2 0%, #37ce8f 100%);
+}
+
+.is-light-mode {
+  --gray: #5f616d;
+  --cardGray: #f0f3fa;
+  --lightGray: #f8f9fe;
+  --cardTitle: #6f717e;
+  --baseBackground: white;
+  --baseColor: #1d2029;
+  --switchSpinner: white;
+  --switch: #5f616d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
     --cardGray: #252b43;
     --baseBackground: #1d2029;
     --baseColor: white;
@@ -181,28 +190,4 @@ body {
     --switchSpinner: #282943;
     --switch: linear-gradient(to right, #4796d2 0%, #37ce8f 100%);
   }
-  
-  .is-light-mode {
-    --gray: #5f616d;
-    --cardGray: #f0f3fa;
-    --lightGray: #f8f9fe;
-    --cardTitle: #6f717e;
-    --baseBackground: white;
-    --baseColor: #1d2029;
-    --switchSpinner: white;
-    --switch: #5f616d;
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --cardGray: #252b43;
-      --baseBackground: #1d2029;
-      --baseColor: white;
-      --gray: #8088ad;
-      --lightGray: #1d2029;
-      --cardTitle: #8088ad;
-      --switchSpinner: #282943;
-      --switch: linear-gradient(to right, #4796d2 0%, #37ce8f 100%);
-    }
-  }
-  
+}
