@@ -22,6 +22,7 @@ let username = document.querySelector("#username-input");
 let searchButton = document.querySelector("#search-button");
 let user = document.querySelector("#user");
 let reposQty = document.querySelector("#reposQty");
+let followersQty = document.querySelector("#followersQty");
 let cardList = document.querySelector("#card-container");
 let noReposMsg = document.querySelector("#no-reposMsg");
 
@@ -96,12 +97,12 @@ function showRepos(data) {
     cardBody.appendChild(projectDescription);
 
     let projectLanguage = document.createElement("p");
-    projectLanguage.className = "card-text fw-light";
+    projectLanguage.className = "card-text fw-bold";
     projectLanguage.innerHTML = `Language: ${repo.language}`;
     cardBody.appendChild(projectLanguage);
 
     let projectLink = document.createElement("a");
-    projectLink.className = "btn btn-danger m-2";
+    projectLink.className = "btn viewCodeBtn text-white m-2";
     projectLink.setAttribute("href", `${repo.html_url}`);
     projectLink.setAttribute("target", "_blank");
     projectLink.innerHTML = "View Code";
@@ -112,7 +113,7 @@ function showRepos(data) {
     modalButton.setAttribute("type", "button");
     modalButton.setAttribute("data-bs-toggle", "modal");
     modalButton.setAttribute("data-bs-target", `#get${repo.name}Modal`);
-    modalButton.className = "btn btn-primary";
+    modalButton.className = "btn viewStatsBtn";
     modalButton.innerHTML = "View Statistics";
 
     // create modal with statistics data
@@ -149,9 +150,25 @@ function showRepos(data) {
     modalHeader.appendChild(closeButton);
 
     let modalBody = document.createElement("div");
-    modalBody.className = "modal-body";
+    modalBody.className = "modal-body mb-4";
     modalContent.appendChild(modalBody);
 
+    // stats - extra data
+    let lastUpdate = document.createElement("div");
+    lastUpdate.className = "text-dark text-center mb-4";
+    let date = new Date(`${repo.updated_at}`);
+    lastUpdate.innerHTML = `<strong>Last commit:</strong></br>${date}`;
+    modalContent.appendChild(lastUpdate);
+
+    let forksCount = `${repo.forks_count}`;
+    if (forksCount != 0) {
+      let forksEl = document.createElement("div");
+      forksEl.className = "text-dark text-center mb-4";
+      forksEl.innerHTML = `<strong>This project has been forked</strong></br>${forksCount} time(s)`;
+      modalContent.appendChild(forksEl);
+    }
+
+    // modal functionality when button is clicked
     modalButton.addEventListener("click", () => {
       modalBody.innerHTML = ""; // clear previous canvas chart if any
 
@@ -197,7 +214,7 @@ function showRepos(data) {
 
           // create chart object
           let languageChart = new Chart(ctx, {
-            type: "doughnut",
+            type: "polarArea",
             data: {
               datasets: [
                 {
@@ -211,7 +228,7 @@ function showRepos(data) {
               legend: {
                 display: true,
                 labels: {
-                  fontColor: "#dc3545",
+                  fontColor: "#",
                 },
               },
             },
@@ -268,7 +285,17 @@ async function getRepos(username) {
           user.innerHTML = `User @${username} was not found!`;
         } else {
           user.innerHTML = `Welcome @${username}`;
-          reposQty.innerHTML = `You currently have ${data.length} projects on GitHub`;
+          reposQty.innerHTML = `You currently have ${data.length} <strong>public</strong> projects on GitHub`;
+
+          // get followers
+          const followersUrl = `https://api.github.com/users/${username}/followers`;
+          fetch(followersUrl)
+            .then((res) => {
+              return res.json();
+            })
+            .then((followers) => {
+              followersQty.innerHTML = `<strong>Followers:</strong> ${followers.length}`;
+            });
 
           showRepos(data); // if user exists, show user's repositories
         }
