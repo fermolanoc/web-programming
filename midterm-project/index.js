@@ -332,10 +332,16 @@ searchButton.addEventListener("click", (event) => {
     getRepos(username.value); // when clicked, call the function to get the user's repositories data
     event.preventDefault(); // prevent to reload website
   } else {
-    // display error/action message
+    // clean page data if any & hide welcome message container
     welcomeMsg.innerHTML = "";
     welcomeMsg.classList.add("d-none");
+    cardList.innerHTML = "";
+    reposQty.innerHTML = "";
+    followersQty.innerHTML = "";
+
+    // display error/action message
     user.classList.add("welcomeMsg");
     user.innerHTML = "You need to enter a username";
+    event.preventDefault(); // prevent to reload website
   }
 });
