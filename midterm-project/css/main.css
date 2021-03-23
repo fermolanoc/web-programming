@@ -59,6 +59,13 @@ body {
   will-change: transform;
 }
 
+/* Welcome Message */
+.welcomeMsg,
+.no-repos {
+  height: 50vh;
+  display: grid;
+  place-items: center;
+}
 /* Buttons */
 .viewCodeBtn {
   background-color: var(--gray);

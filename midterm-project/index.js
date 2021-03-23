@@ -20,11 +20,17 @@ checkbox.addEventListener("change", function (event) {
 
 let username = document.querySelector("#username-input");
 let searchButton = document.querySelector("#search-button");
+let welcomeMsg = document.querySelector("#welcomeMsg");
 let user = document.querySelector("#user");
 let reposQty = document.querySelector("#reposQty");
 let followersQty = document.querySelector("#followersQty");
+// let noReposMsg = document.querySelector("#no-reposMsg");
 let cardList = document.querySelector("#card-container");
-let noReposMsg = document.querySelector("#no-reposMsg");
+
+window.addEventListener("load", () => {
+  welcomeMsg.innerHTML = `WELCOME TO INHUBGRAPHIC</br>Enter your GitHub username to see all of your
+  projects relevant data`;
+});
 
 async function getRepoLanguages(repo) {
   await fetch(repo.languages_url)
@@ -281,9 +287,14 @@ async function getRepos(username) {
         console.log(data);
         if (data.message) {
           cardList.innerHTML = "";
+          reposQty.innerHTML = "";
+          followersQty.innerHTML = "";
+
           // if data contains a key called message it means user doesn't exists
+          user.classList.add("welcomeMsg");
           user.innerHTML = `User @${username} was not found!`;
         } else {
+          user.classList.remove("welcomeMsg");
           user.innerHTML = `Welcome @${username}`;
           reposQty.innerHTML = `You currently have ${data.length} <strong>public</strong> projects on GitHub`;
 
@@ -299,6 +310,8 @@ async function getRepos(username) {
 
           showRepos(data); // if user exists, show user's repositories
         }
+        welcomeMsg.innerHTML = "";
+        welcomeMsg.classList.add("d-none");
       });
   } catch (error) {
     console.log(error);
@@ -307,6 +320,8 @@ async function getRepos(username) {
 
 // function to handle the search user data
 searchButton.addEventListener("click", (event) => {
-  getRepos(username.value); // when clicked, call the function to get the user's repositories data
-  event.preventDefault(); // prevent to reload website
+  if (username.value != "") {
+    getRepos(username.value); // when clicked, call the function to get the user's repositories data
+    event.preventDefault(); // prevent to reload website
+  }
 });
