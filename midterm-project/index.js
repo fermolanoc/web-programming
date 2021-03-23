@@ -107,50 +107,12 @@ function showRepos(data) {
     projectLink.innerHTML = "View Code";
     cardBody.appendChild(projectLink);
 
-    // let projectStats = document.createElement("a");
-    // projectStats.className = "btn btn-warning";
-    // projectStats.addEventListener("click", () => {
-    //   // get url for languages used in each repository and fetch data
-    //   const languages_url = `${repo.languages_url}`;
-    //   fetch(languages_url)
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((repoLanguages) => {
-    //       // console.log(repoLanguages);
-
-    //       let total = 0; // start variable to sum total of values for all languages used
-    //       let languagesInRepo = []; // empty array to store each language and its percentage
-
-    //       for (const prop in repoLanguages) {
-    //         // console.log(`${prop}: ${repoLanguages[prop]}`);
-    //         total += repoLanguages[prop];
-    //       }
-
-    //       // iterate every language to calculate percentage and add each language % to array languagesInRepo
-    //       for (const language in repoLanguages) {
-    //         if (Object.hasOwnProperty.call(repoLanguages, language)) {
-    //           languagePercentage = (
-    //             (repoLanguages[language] * 100) /
-    //             total
-    //           ).toFixed(2);
-
-    //           languagesInRepo.push(`${language}: ${languagePercentage}%`);
-    //         }
-    //       }
-
-    //       console.log(total);
-    //       console.log(languagesInRepo);
-
-    //
-    // });
-
     // create modalButton to trigger modal element with statistics data
     let modalButton = document.createElement("button");
     modalButton.setAttribute("type", "button");
     modalButton.setAttribute("data-bs-toggle", "modal");
     modalButton.setAttribute("data-bs-target", `#get${repo.name}Modal`);
-    modalButton.className = "btn btn-warning";
+    modalButton.className = "btn btn-primary";
     modalButton.innerHTML = "View Statistics";
 
     // create modal with statistics data
@@ -170,11 +132,11 @@ function showRepos(data) {
     modalDialog.appendChild(modalContent);
 
     let modalHeader = document.createElement("div");
-    modalHeader.className = "modal-header";
+    modalHeader.className = "modal-header bg-danger";
     modalContent.appendChild(modalHeader);
 
     let modalTitle = document.createElement("h5");
-    modalTitle.className = "modal-title text-danger";
+    modalTitle.className = "modal-title text-white";
     modalTitle.setAttribute("id", `get${repo.name}ModalLabel`);
     modalTitle.innerHTML = `${repo.name} stats`;
     modalHeader.appendChild(modalTitle);
@@ -191,6 +153,8 @@ function showRepos(data) {
     modalContent.appendChild(modalBody);
 
     modalButton.addEventListener("click", () => {
+      modalBody.innerHTML = ""; // clear previous canvas chart if any
+
       // get url for languages used in each repository and fetch data
       const languages_url = `${repo.languages_url}`;
       fetch(languages_url)
@@ -198,14 +162,17 @@ function showRepos(data) {
           return res.json();
         })
         .then((repoLanguages) => {
-          // console.log(repoLanguages);
-
           let total = 0; // start variable to sum total of values for all languages used
           let languagesInRepo = []; // empty array to store each language and its percentage
 
           for (const prop in repoLanguages) {
             // console.log(`${prop}: ${repoLanguages[prop]}`);
             total += repoLanguages[prop];
+          }
+
+          // create constructor to store each pair language: percentage as an object
+          function LanguagePercentage(language, percentage) {
+            (this.language = language), (this.percentage = percentage);
           }
 
           // iterate every language to calculate percentage and add each language % to array languagesInRepo
@@ -216,20 +183,71 @@ function showRepos(data) {
                 total
               ).toFixed(2);
 
-              languagesInRepo.push(`${language}: ${languagePercentage}%`);
+              // add object {key: value} to Array
+              languagesInRepo.push(
+                new LanguagePercentage(`${language}`, `${languagePercentage}`)
+              );
             }
           }
 
-          modalBody.innerHTML = `${languagesInRepo.join(", ")}`; // add each language with % to content, separated by coma and space
+          // create canvas element to host chart
+          let languageCanvas = document.createElement("canvas");
+          languageCanvas.setAttribute("id", `chart${repo.name}`);
+          let ctx = languageCanvas.getContext("2d");
 
-          console.log(total);
-          console.log(languagesInRepo);
+          // create chart object
+          let languageChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+              datasets: [
+                {
+                  data: [],
+                  backgroundColor: [],
+                },
+              ],
+              labels: [],
+            },
+            options: {
+              legend: {
+                display: true,
+                labels: {
+                  fontColor: "#dc3545",
+                },
+              },
+            },
+          });
+
+          // colors to use for chart
+          let chartColors = [
+            "tomato",
+            "dodgerblue",
+            "mediumseagreen",
+            "slateblue",
+            "violet",
+          ];
+          languagesInRepo.forEach((language) => {
+            // add language to chart
+            languageChart.data.labels.push(language.language);
+            languageChart.data.datasets[0].data.push(language.percentage);
+
+            // assign a different color to each language
+            let colorCount =
+              languageChart.data.datasets[0].backgroundColor.length;
+            let color = chartColors[colorCount % chartColors.length];
+            languageChart.data.datasets[0].backgroundColor.push(color);
+
+            languageChart.update();
+            modalBody.appendChild(languageCanvas);
+          });
+
+          // console.log(total);
+          // console.log(languagesInRepo);
         });
     });
 
     cardBody.appendChild(modalButton); // add to each card button that triggers modal
     cardList.appendChild(modal); // add modal to webpage - hidden by default
-    cardList.appendChild(card);
+    cardList.appendChild(card); // add each card to the main container
   });
 }
 

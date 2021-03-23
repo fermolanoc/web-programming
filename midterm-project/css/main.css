@@ -60,9 +60,6 @@ body {
 }
 
 /* Modal */
-.modal-header {
-  background-color: var(--baseColor);
-}
 .modal-body {
   background-color: var(--baseBackground);
   color: var(--baseColor);
