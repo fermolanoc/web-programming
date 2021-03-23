@@ -17,7 +17,6 @@ checkbox.addEventListener("change", function (event) {
 });
 
 // get elements from document
-
 let username = document.querySelector("#username-input");
 let searchButton = document.querySelector("#search-button");
 let welcomeMsg = document.querySelector("#welcomeMsg");
@@ -27,51 +26,52 @@ let followersQty = document.querySelector("#followersQty");
 // let noReposMsg = document.querySelector("#no-reposMsg");
 let cardList = document.querySelector("#card-container");
 
+// show welcome message when page loads
 window.addEventListener("load", () => {
   welcomeMsg.innerHTML = `WELCOME TO INHUBGRAPHIC</br>Enter your GitHub username to see all of your
   projects relevant data`;
 });
 
-async function getRepoLanguages(repo) {
-  await fetch(repo.languages_url)
-    .then((res) => {
-      return res.json();
-    })
-    .then((repoData) => {
-      // console.log(Object.keys(repoData));
-      let languages = Object.keys(repoData);
-      // return languages;
-      languages.forEach((language) => {
-        console.log(language);
-        return language;
-        // let cardBodyDetails = document.createElement("p");
-        // cardBodyDetails.className = "card-text fw-light";
-        // cardBodyDetails.innerHTML = language;
+// async function getRepoLanguages(repo) {
+//   await fetch(repo.languages_url)
+//     .then((res) => {
+//       return res.json();
+//     })
+//     .then((repoData) => {
+//       // console.log(Object.keys(repoData));
+//       let languages = Object.keys(repoData);
+//       // return languages;
+//       languages.forEach((language) => {
+//         console.log(language);
+//         return language;
+//         // let cardBodyDetails = document.createElement("p");
+//         // cardBodyDetails.className = "card-text fw-light";
+//         // cardBodyDetails.innerHTML = language;
 
-        // return cardBodyDetails;
-      });
-    });
-}
+//         // return cardBodyDetails;
+//       });
+//     });
+// }
 
-function getLanguages(data) {
-  for (let index = 0; index < data.length; index++) {
-    const languages_url = `${data[index].languages_url}`;
-    fetch(languages_url)
-      .then((res) => {
-        return res.json();
-      })
-      .then((repoLanguages) => {
-        // return repoLanguages;
-        // console.log(repoLanguages);
+// function getLanguages(data) {
+//   for (let index = 0; index < data.length; index++) {
+//     const languages_url = `${data[index].languages_url}`;
+//     fetch(languages_url)
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then((repoLanguages) => {
+//         // return repoLanguages;
+//         // console.log(repoLanguages);
 
-        let languages = Object.keys(repoLanguages);
-        languages.forEach((language) => {
-          return language;
-          // console.log(language);
-        });
-      });
-  }
-}
+//         let languages = Object.keys(repoLanguages);
+//         languages.forEach((language) => {
+//           return language;
+//           // console.log(language);
+//         });
+//       });
+//   }
+// }
 
 function showRepos(data) {
   cardList.innerHTML = ""; // clear container if there's data
@@ -93,6 +93,7 @@ function showRepos(data) {
     projectTitle.innerHTML = repo.name;
     cardBody.appendChild(projectTitle);
 
+    // if repository has a description, it'll show, otherwise, default message
     let projectDescription = document.createElement("p");
     projectDescription.className = "card-text fw-light";
     if (repo.description == null) {
@@ -102,11 +103,14 @@ function showRepos(data) {
     }
     cardBody.appendChild(projectDescription);
 
+    // shows main language detected on repository ->
+    // 'View Statistics' button will show all languages used on each repository
     let projectLanguage = document.createElement("p");
     projectLanguage.className = "card-text fw-bold";
     projectLanguage.innerHTML = `Language: ${repo.language}`;
     cardBody.appendChild(projectLanguage);
 
+    // button -> link to github repository code
     let projectLink = document.createElement("a");
     projectLink.className = "btn viewCodeBtn text-white m-2";
     projectLink.setAttribute("href", `${repo.html_url}`);
@@ -160,12 +164,14 @@ function showRepos(data) {
     modalContent.appendChild(modalBody);
 
     // stats - extra data
+    // last commit
     let lastUpdate = document.createElement("div");
     lastUpdate.className = "text-dark text-center mb-4";
     let date = new Date(`${repo.updated_at}`);
     lastUpdate.innerHTML = `<strong>Last commit:</strong></br>${date}`;
     modalContent.appendChild(lastUpdate);
 
+    // # of times repo has been forked
     let forksCount = `${repo.forks_count}`;
     if (forksCount != 0) {
       let forksEl = document.createElement("div");
@@ -315,13 +321,21 @@ async function getRepos(username) {
       });
   } catch (error) {
     console.log(error);
+    welcomeMsg.innerHTML = `Something happened: ${error}`;
   }
 }
 
 // function to handle the search user data
 searchButton.addEventListener("click", (event) => {
   if (username.value != "") {
+    // while input box is not empty, try to get repositories data
     getRepos(username.value); // when clicked, call the function to get the user's repositories data
     event.preventDefault(); // prevent to reload website
+  } else {
+    // display error/action message
+    welcomeMsg.innerHTML = "";
+    welcomeMsg.classList.add("d-none");
+    user.classList.add("welcomeMsg");
+    user.innerHTML = "You need to enter a username";
   }
 });
