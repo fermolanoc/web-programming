@@ -128,6 +128,19 @@
               this.students.push(student);
               this.newStudentName = "";
               this.newStarID = "";
+
+              this.students.sort(function (s1, s2) {
+                // return 1 if s1 goes after s2
+                if (s1.name.toUpperCase() > s2.name.toUpperCase()) {
+                  return 1;
+                  // return -1 if s1 goes before s2
+                } else if (s1.name.toUpperCase() < s2.name.toUpperCase()) {
+                  return -1;
+                  // return 0 if order is equivalent
+                } else {
+                  return 0;
+                }
+              });
             }
             // else display errors message
           },

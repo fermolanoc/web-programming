@@ -9,12 +9,14 @@ tr {
 }
 
 .present {
-  color: gray;
+  background-color: rgb(16, 42, 114);
+  color: white;
   font-style: italic;
 }
 
 .absent {
-  color: black;
+  background-color: rgb(97, 101, 141);
+  color: whitesmoke;
   font-weight: bold;
 }
 
