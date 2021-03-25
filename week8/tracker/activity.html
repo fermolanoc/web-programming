@@ -21,9 +21,14 @@
       <div id="add-hours" class="card">
         <h2 class="card-header">Add Records</h2>
         <div class="card-body">
-          <!-- TODO use v-if to show this if there are validation errors -->
-          <div class="alert alert-danger">
-            <!-- TODO show a list of validation errors from form -->
+          <!-- use v-if to show this if there are validation errors -->
+          <div
+            class="alert alert-danger"
+            v-if="errors.length > 0"
+            v-for="error in errors"
+          >
+            <!-- show a list of validation errors from form -->
+            {{ error }}
           </div>
 
           <div class="form-group">
@@ -165,24 +170,54 @@
 
             dateString: "",
             hours: 1,
-            type: "Sketching",
-            medium: "Traditional",
+            type: "",
+            medium: "",
 
             // used to the select-option input
             types: ["Sketching", "Drawing", "Painting"],
+
+            errors: [],
           };
         },
         methods: {
           addRecord() {
-            let date = new Date(this.dateString);
+            this.errors = []; // clear errors array
 
-            let record = {
-              date: date,
-              hours: this.hours,
-              type: this.type,
-              medium: this.medium,
-            };
-            this.activityRecords.push(record);
+            // validate date today or in the past
+            let date = new Date(this.dateString);
+            if (
+              !this.dateString ||
+              this.dateString === "Invalid Date" ||
+              date > new Date()
+            ) {
+              this.errors.push("Select a valid date, today or in the past");
+            }
+
+            // validate hours between 0 and max 24
+            if (this.hours <= 0 || this.hours > 24) {
+              this.errors.push(
+                "Number of hours must be greater than 0 and less or equal to 24"
+              );
+            }
+
+            // validate that one type and one medium option are selected
+            if (!this.type) {
+              this.errors.push("Select a type");
+            }
+
+            if (!this.medium) {
+              this.errors.push("Select a medium");
+            }
+
+            if (this.errors.length === 0) {
+              let record = {
+                date: date,
+                hours: this.hours,
+                type: this.type,
+                medium: this.medium,
+              };
+              this.activityRecords.push(record);
+            }
           },
         },
       });
