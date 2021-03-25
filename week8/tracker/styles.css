@@ -1,4 +1,8 @@
 #records {
-    max-height: 250px;
-    overflow: scroll;
+  max-height: 250px;
+  overflow: scroll;
+}
+
+[v-cloak] {
+  /* display: none; */
 }
