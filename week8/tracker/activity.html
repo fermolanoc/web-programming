@@ -134,7 +134,7 @@
               </tr>
               <!-- use v-for to create one table row for each activity record -->
               <tr v-for="record in activityRecords">
-                <td>{{ record.date }}</td>
+                <td>{{ shortDate(record.date) }}</td>
                 <td>{{ record.hours }}</td>
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
@@ -218,6 +218,11 @@
               };
               this.activityRecords.push(record);
             }
+          },
+          shortDate(date) {
+            return new Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(
+              date
+            );
           },
         },
       });
