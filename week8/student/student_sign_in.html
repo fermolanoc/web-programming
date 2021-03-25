@@ -13,7 +13,7 @@
   </head>
 
   <body>
-    <div id="app">
+    <div id="app" v-cloak>
       <div class="alert alert-danger" v-if="errors.length > 0">
         <ul>
           <li v-for="error in errors">{{ error }}</li>
@@ -50,16 +50,33 @@
             <!-- TODO create table rows 
                    Each row will have a checkbox, bound to the app's data 
                    When the checkbox is checked/unchecked, the student will be signed in/out -->
-            <tr v-for="student in students">
+            <tr
+              v-for="student in students"
+              v-bind:class=" { present: student.present, absent: !student.present } "
+            >
               <td>{{ student.name }}</td>
               <td>{{ student.starID }}</td>
-              <!-- <td>{{ student.present }}</td> -->
+              <td>
+                <input
+                  type="checkbox"
+                  v-model="student.present"
+                  v-on:change="arrivedOrLeft(student)"
+                />
+              </td>
             </tr>
           </table>
         </div>
       </div>
 
       <!-- TODO show a message when student arrives or leaves  -->
+      <div v-if="mostRecentStudent.name">
+        <div v-if="mostRecentStudent.present" class="alert alert-success">
+          Welcome {{ mostRecentStudent.name }}
+        </div>
+        <div v-else class="alert alert-info">
+          Goodbye, {{mostRecentStudent.name }}. See you later
+        </div>
+      </div>
     </div>
 
     <script>
@@ -87,6 +104,7 @@
               },
             ],
             errors: [],
+            mostRecentStudent: {}, // store most recent student arrival or departure
           };
         },
         methods: {
@@ -112,6 +130,9 @@
               this.newStarID = "";
             }
             // else display errors message
+          },
+          arrivedOrLeft(student) {
+            this.mostRecentStudent = student;
           },
         },
       });
