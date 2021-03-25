@@ -120,8 +120,8 @@
 
         <div class="card-body">
           <h3>
-            <!-- TODO Display number of records -->
-            records
+            <!-- Display number of records -->
+            {{ totalRecords }}
           </h3>
 
           <div id="records">
@@ -148,11 +148,10 @@
         <h2 class="card-header">Summary</h2>
 
         <div class="card-body">
-          <!-- TODO add computed property to calculate the total hours -->
+          <!-- add computed property to calculate the total hours -->
           <p>
             You have practiced a total of
-            <!-- TODO display total hours -->
-            hours
+            <!-- display total hours -->{{ totalHours }} hours
           </p>
 
           <!-- Challenge question! Display a list of the total hours for each type.  -->
@@ -217,12 +216,34 @@
                 medium: this.medium,
               };
               this.activityRecords.push(record);
+
+              // sort activity records
+              this.activityRecords.sort(function (r1, r2) {
+                // sort with oldest records first
+                return r1.date.getTime() - r2.date.getTime();
+              });
             }
           },
           shortDate(date) {
             return new Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(
               date
             );
+          },
+        },
+        computed: {
+          totalRecords() {
+            if (this.activityRecords.length === 1) {
+              return "1 record";
+            } else {
+              return `${this.activityRecords.length} records`;
+            }
+          },
+          totalHours() {
+            let total = 0;
+            this.activityRecords.forEach((record) => {
+              total += record.hours;
+            });
+            return total;
           },
         },
       });
