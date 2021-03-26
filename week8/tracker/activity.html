@@ -102,31 +102,18 @@
             <label class="form-check-label" for="media2"> Digital </label>
           </div>
 
-          <div class="form-label pb-2 mt-4 text-primary">
-            Activity completed
-          </div>
+          <div class="form-label pb-2 mt-4 text-primary">Activity Status</div>
           <div class="form-check-inline">
             <input
-              type="radio"
+              type="checkbox"
               id="completed"
               class="form-check-input"
-              value="Completed"
               v-model="completed"
+              v-on:change="completeStatus"
             />
-            <label for="form-check-label" for="completed"> Completed </label>
+            <label for="form-check-label" for="completed"> Completed? </label>
           </div>
-          <div class="form-check-inline">
-            <input
-              type="radio"
-              id="not-completed"
-              class="form-check-input"
-              value="Not-Completed"
-              v-model="completed"
-            />
-            <label for="form-check-label" for="Not-Completed">
-              Not Completed
-            </label>
-          </div>
+
           <div class="form-label pb-2 mt-4 text-primary">Comments</div>
           <textarea
             class="form-control mb-2"
@@ -177,7 +164,8 @@
                 <td>{{ record.hours }}</td>
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
-                <td>{{ record.completed }}</td>
+                <td v-if="record.completed">Completed</td>
+                <td v-else="record.completed">Not Completed</td>
                 <td>{{ record.comments }}</td>
               </tr>
             </table>
@@ -250,9 +238,9 @@
             if (!this.medium) {
               this.errors.push("Select a medium");
             }
-            if (!this.completed) {
-              this.errors.push("Select an activity completed");
-            }
+            // if (!this.completed) {
+            //   this.errors.push("Select an activity completed");
+            // }
 
             if (this.errors.length === 0) {
               let record = {
