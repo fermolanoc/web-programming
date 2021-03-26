@@ -102,6 +102,30 @@
             <label class="form-check-label" for="media2"> Digital </label>
           </div>
 
+          <div class="form-label pb-2 mt-4">Activity Progress</div>
+          <div class="form-check-inline">
+            <input
+              type="radio"
+              id="progress1"
+              class="form-check-input"
+              value="Work-in-progress"
+              v-model="progress"
+            />
+            <label for="form-check-label" for="progress1">
+              Work-in-progress
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <input
+              type="radio"
+              id="progress2"
+              class="form-check-input"
+              value="Completed"
+              v-model="progress"
+            />
+            <label for="form-check-label" for="progress2"> Completed </label>
+          </div>
+
           <div>
             <!-- TODO Add v-on:click -->
             <button
@@ -131,13 +155,19 @@
                 <th>How many hours?</th>
                 <th>Type</th>
                 <th>Media</th>
+                <th>Progress</th>
               </tr>
               <!-- use v-for to create one table row for each activity record -->
-              <tr v-for="record in activityRecords">
+              <!-- add classes depending on record type -->
+              <tr
+                v-for="record in activityRecords"
+                v-bind:class="{categoryOne: record.type === 'Sketching', categoryTwo: record.type === 'Drawing', categoryThree: record.type === 'Painting'}"
+              >
                 <td>{{ shortDate(record.date) }}</td>
                 <td>{{ record.hours }}</td>
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
+                <td>{{ record.progress }}</td>
               </tr>
             </table>
           </div>
@@ -171,6 +201,7 @@
             hours: 1,
             type: "",
             medium: "",
+            progress: "",
 
             // used to the select-option input
             types: ["Sketching", "Drawing", "Painting"],
@@ -199,13 +230,16 @@
               );
             }
 
-            // validate that one type and one medium option are selected
+            // validate that one type, one medium and one progress(status) option are selected
             if (!this.type) {
               this.errors.push("Select a type");
             }
 
             if (!this.medium) {
               this.errors.push("Select a medium");
+            }
+            if (!this.progress) {
+              this.errors.push("Select an activity progress");
             }
 
             if (this.errors.length === 0) {
@@ -214,6 +248,7 @@
                 hours: this.hours,
                 type: this.type,
                 medium: this.medium,
+                progress: this.progress,
               };
               this.activityRecords.push(record);
 
@@ -231,6 +266,7 @@
           },
         },
         computed: {
+          // count total of records
           totalRecords() {
             if (this.activityRecords.length === 1) {
               return "1 record";
@@ -238,6 +274,7 @@
               return `${this.activityRecords.length} records`;
             }
           },
+          // count total of hours
           totalHours() {
             let total = 0;
             this.activityRecords.forEach((record) => {

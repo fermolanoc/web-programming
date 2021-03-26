@@ -6,3 +6,13 @@
 [v-cloak] {
   display: none;
 }
+
+.categoryOne {
+  background-color: salmon;
+}
+.categoryTwo {
+  background-color: skyblue;
+}
+.categoryThree {
+  background-color: mediumslateblue;
+}
