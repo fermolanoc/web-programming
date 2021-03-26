@@ -19,7 +19,7 @@
       <h1 class="text-center">{{ activity }} Time Tracker</h1>
 
       <div id="add-hours" class="card">
-        <h2 class="card-header bg-dark text-warning">Add Records</h2>
+        <h2 class="card-header bg-primary text-light">Add Records</h2>
         <div class="card-body">
           <!-- use v-if to show this if there are validation errors -->
           <div
@@ -102,31 +102,38 @@
             <label class="form-check-label" for="media2"> Digital </label>
           </div>
 
-          <div class="form-label pb-2 mt-4 text-primary">Activity Progress</div>
-          <div class="form-check-inline">
-            <input
-              type="radio"
-              id="progress1"
-              class="form-check-input"
-              value="Work-in-progress"
-              v-model="progress"
-            />
-            <label for="form-check-label" for="progress1">
-              Work-in-progress
-            </label>
+          <div class="form-label pb-2 mt-4 text-primary">
+            Activity completed
           </div>
           <div class="form-check-inline">
             <input
               type="radio"
-              id="progress2"
+              id="completed"
               class="form-check-input"
               value="Completed"
-              v-model="progress"
+              v-model="completed"
             />
-            <label for="form-check-label" for="progress2"> Completed </label>
+            <label for="form-check-label" for="completed"> Completed </label>
+          </div>
+          <div class="form-check-inline">
+            <input
+              type="radio"
+              id="not-completed"
+              class="form-check-input"
+              value="Not-Completed"
+              v-model="completed"
+            />
+            <label for="form-check-label" for="Not-Completed">
+              Not Completed
+            </label>
           </div>
           <div class="form-label pb-2 mt-4 text-primary">Comments</div>
-          <textarea class="form-control mb-2" id="comments" rows="2"></textarea>
+          <textarea
+            class="form-control mb-2"
+            id="comments"
+            rows="2"
+            v-model="comments"
+          ></textarea>
 
           <div>
             <!-- TODO Add v-on:click -->
@@ -142,7 +149,7 @@
       </div>
 
       <div class="card">
-        <h2 class="card-header bg-dark text-warning">Activity Records</h2>
+        <h2 class="card-header bg-primary text-light">Activity Records</h2>
 
         <div class="card-body">
           <h3>
@@ -157,7 +164,8 @@
                 <th>How many hours?</th>
                 <th>Type</th>
                 <th>Media</th>
-                <th>Progress</th>
+                <th>Completed</th>
+                <th>Comments</th>
               </tr>
               <!-- use v-for to create one table row for each activity record -->
               <!-- add classes depending on record type -->
@@ -169,7 +177,8 @@
                 <td>{{ record.hours }}</td>
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
-                <td>{{ record.progress }}</td>
+                <td>{{ record.completed }}</td>
+                <td>{{ record.comments }}</td>
               </tr>
             </table>
           </div>
@@ -177,7 +186,7 @@
       </div>
 
       <div class="card">
-        <h2 class="card-header bg-dark text-warning">Summary</h2>
+        <h2 class="card-header bg-primary text-light">Summary</h2>
 
         <div class="card-body">
           <!-- add computed property to calculate the total hours -->
@@ -203,7 +212,8 @@
             hours: 1,
             type: "",
             medium: "",
-            progress: "",
+            completed: false,
+            comments: "",
 
             // used to the select-option input
             types: ["Sketching", "Drawing", "Painting"],
@@ -232,7 +242,7 @@
               );
             }
 
-            // validate that one type, one medium and one progress(status) option are selected
+            // validate that one type, one medium and one completed(status) option are selected
             if (!this.type) {
               this.errors.push("Select a type");
             }
@@ -240,8 +250,8 @@
             if (!this.medium) {
               this.errors.push("Select a medium");
             }
-            if (!this.progress) {
-              this.errors.push("Select an activity progress");
+            if (!this.completed) {
+              this.errors.push("Select an activity completed");
             }
 
             if (this.errors.length === 0) {
@@ -250,7 +260,8 @@
                 hours: this.hours,
                 type: this.type,
                 medium: this.medium,
-                progress: this.progress,
+                completed: this.completed,
+                comments: this.comments,
               };
               this.activityRecords.push(record);
 
