@@ -187,6 +187,10 @@
           </p>
 
           <!-- Challenge question! Display a list of the total hours for each type.  -->
+          <h4>Total hours per Category</h4>
+          <p v-for="category in getCategoryHours">
+            {{ category.name }}: {{category.hours}}
+          </p>
         </div>
       </div>
     </div>
@@ -285,6 +289,38 @@
               total += record.hours;
             });
             return total;
+          },
+          //   count hours per category
+          getCategoryHours() {
+            const categories = [
+              {
+                name: "Sketching",
+                hours: 0,
+              },
+              {
+                name: "Drawing",
+                hours: 0,
+              },
+              {
+                name: "Painting",
+                hours: 0,
+              },
+            ];
+            let sketching = 0;
+            let drawing = 0;
+            let painting = 0;
+
+            this.activityRecords.forEach((record) => {
+              if (record.type == "Sketching") {
+                categories[0]["hours"] += record.hours;
+              } else if (record.type == "Drawing") {
+                categories[1]["hours"] += record.hours;
+              } else {
+                categories[2]["hours"] += record.hours;
+              }
+            });
+
+            return categories;
           },
         },
       });
