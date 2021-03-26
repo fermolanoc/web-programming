@@ -109,7 +109,6 @@
               id="completed"
               class="form-check-input"
               v-model="completed"
-              v-on:change="completeStatus"
             />
             <label for="form-check-label" for="completed"> Completed? </label>
           </div>
@@ -165,8 +164,12 @@
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
                 <td v-if="record.completed">Completed</td>
-                <td v-else="record.completed">Not Completed</td>
-                <td>{{ record.comments }}</td>
+                <td v-else>Not Completed</td>
+                <td v-if="record.comments.length <= 40">
+                  {{ record.comments }}
+                </td>
+                <!-- truncate comments output when it has more than 40 characters -->
+                <td v-else>{{ record.comments.slice(0, 40) + '...' }}</td>
               </tr>
             </table>
           </div>
