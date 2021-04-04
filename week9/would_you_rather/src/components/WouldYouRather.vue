@@ -1,6 +1,6 @@
 <template>
   <div class="wyr">
-    <h2>Pleaase make your choice</h2>
+    <h2>Choose one option</h2>
     <h3>{{ question }}</h3>
 
     <input type="radio" v-model="choice" v-bind:value="answer1" v-on:change="choiceMade"><label for="">{{ answer1 }}</label>
@@ -36,8 +36,9 @@ h3 {
 }
 .wyr {
   padding: .5rem 2rem 2rem;
+  margin-bottom: 1rem;
   border-radius: 20px;
-  background-color: whitesmoke;
+  background-color: white;
 }
 input {
   margin-top: 1rem;
