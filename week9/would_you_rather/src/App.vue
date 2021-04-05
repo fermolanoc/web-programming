@@ -1,8 +1,10 @@
 <template>
 <div id="app">
-  <h1>Would you rather...</h1>
+  <h1>Would you rather...?</h1>
+  <!-- Loop trough questions data to render each question and its answer options into WouldYouRather component -->
   <div v-for="question in questions" v-bind:key="question.id">
-    <would-you-rather 
+    <would-you-rather
+      v-bind:id="question.id" 
       v-bind:question="question.question"
       v-bind:answer1="question.answer1"
       v-bind:answer2="question.answer2"
@@ -10,6 +12,8 @@
     ></would-you-rather>
   </div>
 
+  <h1>You would rather...</h1>
+  <!-- for each user choise, render each one of them on an li element on screen -->
   <p class="userSelection" v-for="choice in userSelectionMessage" v-bind:key="choice.id">
     <li>{{ choice }}</li>
   </p>
@@ -36,14 +40,14 @@ export default {
         {
           id: 1,
           question: "Would you rather be a detective or a pilot??", 
-          answer1: "Detective",
-          answer2: "Pilot",
+          answer1: "Be a Detective",
+          answer2: "Be a Pilot",
       },
         {
           id: 2,
           question: "Would you rather be a wizard or a superhero?", 
-          answer1: "Wizard",
-          answer2: "Superhero",
+          answer1: "Be a Wizard",
+          answer2: "Be a Superhero",
       },
     ],
     userSelectionMessage: [],
@@ -51,6 +55,7 @@ export default {
   },
   methods: {
     answerChanged(choice) {
+      // add each user choice to Array
       this.userSelectionMessage.push(choice)
     }
   }

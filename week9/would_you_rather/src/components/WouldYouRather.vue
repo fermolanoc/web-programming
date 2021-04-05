@@ -1,8 +1,10 @@
 <template>
   <div class="wyr">
     <h2>Choose one option</h2>
+    <!-- Render each question -->
     <h3>{{ question }}</h3>
 
+    <!-- for each question, show its 2 respective options -->
     <input type="radio" v-model="choice" v-bind:value="answer1" v-on:change="choiceMade"><label for="">{{ answer1 }}</label>
     <input type="radio" v-model="choice" v-bind:value="answer2" v-on:change="choiceMade"><label for="">{{ answer2 }}</label>
   </div>
@@ -12,6 +14,7 @@
 export default {
   name: 'WouldYouRather',
   props: {
+    id: Number,
     question: String,
     answer1: String,
     answer2: String
@@ -22,6 +25,7 @@ export default {
     }
   },
   methods: {
+    // when select any of the answer options, save the selection on the choice parameter to sent to parent
     choiceMade() {
       this.$emit("answer-changed", this.choice)
     }
