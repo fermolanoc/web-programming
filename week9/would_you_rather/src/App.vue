@@ -2,19 +2,17 @@
 <div id="app">
   <h1>Would you rather...?</h1>
   <!-- Loop trough questions data to render each question and its answer options into WouldYouRather component -->
-  <div v-for="question in questions" v-bind:key="question.id">
     <would-you-rather
-      v-bind:id="question.id" 
-      v-bind:question="question.question"
-      v-bind:answer1="question.answer1"
-      v-bind:answer2="question.answer2"
+      v-for="question in questions" v-bind:key="question.id"
+      v-bind:question="question" 
       v-on:answer-changed="answerChanged"
+      v-on:choices-to-render="choicesToRender"
     ></would-you-rather>
-  </div>
+  
 
   <h1>You would rather...</h1>
-  <!-- for each user choise, render each one of them on an li element on screen -->
-  <p class="userSelection" v-for="choice in userSelectionMessage" v-bind:key="choice.id">
+  <!-- for each user choice, render each one of them on an li element on screen -->
+  <p class="userSelection" v-for="choice in choicesToRender" v-bind:key="choice.id">
     <li>{{ choice }}</li>
   </p>
 </div>
@@ -57,6 +55,18 @@ export default {
     answerChanged(id, choice) {
       // add each user choice to Array
       this.userSelectionMessage[id] = choice
+    }
+  },
+  computed: {
+    // this function will save only the choices to the questions user has already choose for
+    choicesToRender: function() {
+      let userChoices = []
+      this.userSelectionMessage.forEach(choice => {
+        if (choice) { // if there's a question with no option chosen(undefined) it won't be saved
+          userChoices.push(choice)
+        }
+      });
+      return userChoices; //return the new list with only chosen options
     }
   }
 }
