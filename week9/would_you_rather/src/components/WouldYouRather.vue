@@ -27,7 +27,7 @@ export default {
   methods: {
     // when select any of the answer options, save the selection on the choice parameter to sent to parent
     choiceMade() {
-      this.$emit("answer-changed", this.choice)
+      this.$emit("answer-changed", this.id, this.choice)
     }
   }
 }

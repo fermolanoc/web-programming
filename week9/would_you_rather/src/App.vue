@@ -54,9 +54,9 @@ export default {
     }
   },
   methods: {
-    answerChanged(choice) {
+    answerChanged(id, choice) {
       // add each user choice to Array
-      this.userSelectionMessage.push(choice)
+      this.userSelectionMessage[id] = choice
     }
   }
 }
