@@ -17,6 +17,7 @@
               <th v-show="editTable">Delete</th>
             </tr>
 
+            <!-- for each student create a Table row and handle(pass to parent component) functions to edit table, update student present and delete student -->
             <student-row
               v-for="student in students"
               v-bind:student="student"
@@ -52,10 +53,12 @@ export default {
         }
     },
     methods: {
+        // let parent component know student status -present true or false- has changed 
         arrivedOrLeft(student, present) {
-            // TODO emit message to parent
+            // emit message to parent
             this.$emit('student-arrived-or-left', student, present)
         },
+        // let parent component know which student will be deleted
         deleteStudent(student) {
             this.$emit('delete-student', student)
         }

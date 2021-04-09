@@ -31,12 +31,16 @@ export default {
     }
   },
   methods: {
+    // function to add each new student to Array and order the list alphabetically
     newStudentAdded(student) {
-      this.students.push(student)
+      this.students.push(student) // add student to array
       this.students.sort(function (s1, s2){
+        // compare lowercase version of each student name, return a 1 or -1 as a result to sort them
         return s1.name.toLowerCase() > s2.name.toLowerCase() ? 1 : -1
       })
     },
+
+    // function to 
     studentArrivedOrLeft(student, present) {
       // find the student
       let updateStudent = this.students.find(s => {
@@ -45,19 +49,21 @@ export default {
         }
       })
 
-      // update present attribute
+      // update present attribute and add student to mostRecentStudent to be mentioned on screen
       if (updateStudent) {
         updateStudent.present = present
         this.mostRecentStudent = updateStudent
       }
     },
+
+    // create a new array copy using filter with all the students except the one we're passing as parameter
     studentDeleted(student) {
       this.students = this.students.filter(s => {
         if (s != student) {
           return true
         }
       })
-      this.mostRecentStudent = {}
+      this.mostRecentStudent = {} // clean mostRecentStudent object
     }
   }
 }

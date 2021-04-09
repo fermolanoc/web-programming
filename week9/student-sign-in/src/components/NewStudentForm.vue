@@ -3,6 +3,7 @@
         <!-- Template/HTML here -->
         <div class="alert alert-danger" v-if="errors.length > 0">
             <ul>
+            <!-- show user what error data given has-->
             <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
             </ul>
         </div>
@@ -41,6 +42,7 @@ export default {
         addStudent() {
             this.errors = []; // clear errors array
             if (this.newStudentName && this.newStarID) {
+                // if both name and starID are valid, create student object
                 let student = {
                 name: this.newStudentName,
                 starID: this.newStarID,
@@ -50,9 +52,11 @@ export default {
               // TODO emit message to parent with new student
               this.$emit('student-added', student)
 
+                // clean inputs 
               this.newStudentName = ''
               this.newStarID = ''
             } else {
+                // if there's any error, save them on errors array to be shown on screen
                 this.errors.push("Name and starID are required");
             }
           },

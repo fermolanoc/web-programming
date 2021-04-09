@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Template/HTML here -->
-        <!-- TODO show a message when student arrives or leaves  -->
+        <!-- show a message when student arrives or leaves  -->
       <div v-if="student.name">
         <div v-if="student.present" class="alert alert-success">
           Welcome {{ student.name }}
